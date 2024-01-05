@@ -14,10 +14,10 @@ class POKEQUERY
     @number = args[1] === nil ? nil : args[1]
     @type =   args[2] === nil ? nil : args[2]
     # store all of the different queries in a hash
-    @query = {
-      name => "https://pokeapi.co/api/v2/pokemon/#{@name}",
-      number => "https://pokeapi.co/api/v2/pokemon/#{@number}",
-      type => "https://pokeapi.co/api/v2/pokemon/#{@type}"
+    $query = {
+      "name" => "https://pokeapi.co/api/v2/pokemon/#{@name}",
+      "number" => "https://pokeapi.co/api/v2/pokemon/#{@number}",
+      "type" => "https://pokeapi.co/api/v2/pokemon/#{@type}"
     }
 
   end
