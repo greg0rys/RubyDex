@@ -75,8 +75,8 @@ def verbose_move_list
       level_learned = move["version_group_details"][0]["level_learned_at"]
     end
 
-    puts "#{move["move"]["name"].capitalize} => Level: \
-#{remove_dash(level_learned)}"
+    puts "#{move["move"]["name"].tr('-',' ').capitalize} => Level: \
+#{level_learned}".rjust(10)
   end
 
 end
