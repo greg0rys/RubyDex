@@ -7,42 +7,44 @@ require 'json'
 
 module Poke_Query
   # store all of the different queries in a hash
+  # this is globally accessible
+
   $query = {
-    "name" => "https://pokeapi.co/api/v2/pokemon/",
-    "number" => "https://pokeapi.co/api/v2/pokemon/",
-    "type" => "https://pokeapi.co/api/v2/pokemon/"
+    'name' => 'https://pokeapi.co/api/v2/pokemon/',
+    'number' => 'https://pokeapi.co/api/v2/pokemon/',
+    'type' => 'https://pokeapi.co/api/v2/pokemon/'
   }
 
-  def get_pokemon_by_name(name)
+  def get_pokemon_by_name(name = 'Tangela')
+    # let user know we will get data for Tangela since no value supplied
+    puts "You did not supply a Pokemon name, using the default #{name}" if name === 'Tangela'
 
-    if is_valid_string(name)
-      uri = URI("#{$query["name"]}/name")
-      res = Net::HTTP.get_response(uri)
-      return JSON.parse(res.body) || nil if 0 >= res.length
-    end
-
-    "The name you entered was #{name.nil? ? "nil " : "empty "} causing it to
-return invalid inputs.. try again!"
+    run_query(
+      'name',
+      name
+    )
+    false # if we reach this line then the res was not the proper length
   end
 
-  def get_pokemon_by_number(number)
+  def get_pokemon_by_number(number = '1')
+    puts "You did not supply a Pokemon number, using the default #{number}" if number === 1
 
-    if number <= 0 || number > 1025 || number.nil?
-      "#{number} is not a valid Pokemon please enter a number
-               \n\tbetween 001 & 1025 (inclusive)"
-    end
+    pokemon = run_query(
+      'number',
+      number
+    )
 
-    uri = URI("#{$query["number"]}/number")
+    return pokemon if pokemon.length.positive?
+
+    false # if we reach this no pokemon was returned, and user was alerted
+  end
+
+  def run_query(query_type = 'name', query_value = 'Tangela')
+    uri = URI("#{$query[query_type]}#{query_value}")
     res = Net::HTTP.get_response(uri)
-    JSON.parse(res.body) || nil if 0 >= res.length
+    return JSON.parse(res.body) if res.body.lenght.positive?
 
+    puts "The response size was #{res.body.length} -- Invalid Response"
+    false
   end
-
-  def get_pokemon_by_type(type)
-    uri = URI("#{$query["type"]/type}")
-  end
-  def make_move_hash
-    result = Pokemon.new(nil)
-  end
-
 end

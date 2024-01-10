@@ -1,1 +1,1 @@
-[view the project site](https://greg0rys.github.io/projects/ruby_dex)
+ [view the project site](https://goyos.club/projects/ruby_dex)
