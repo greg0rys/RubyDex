@@ -19,7 +19,7 @@ module Poke_Query
     # let user know we will get data for Tangela since no value supplied
     puts "You did not supply a Pokemon name, using the default #{name}" if name === 'Tangela'
 
-    run_query(
+    pokemon_info = run_query(
       'name',
       name
     )
@@ -29,7 +29,7 @@ module Poke_Query
   def get_pokemon_by_number(number = '1')
     puts "You did not supply a Pokemon number, using the default #{number}" if number === 1
 
-    pokemon = run_query(
+    pokemon_info = run_query(
       'number',
       number
     )
