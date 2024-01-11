@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'pokemon'
+$first_run = false # used for formatting output
+
 print 'Enter a Pokemon name: '
 pkmn_name = gets.chomp
 puts
@@ -15,3 +17,26 @@ user_choice.print_moves if answer.upcase == 'Y'
 user_choice.print_move_count
 
 user_choice.verbose_move_list
+
+
+
+def menu
+  unless $first_run
+    puts
+    puts
+  end
+
+  puts "*" * 100
+  puts "Main Menu"
+  puts "1. Search by Name - Find a Pokemon by Name"
+  puts "2. Search by Pokedex Number - Find a Pokemon Given ID"
+  puts "3. Create a Team - Store your current party for quick recall"
+  puts "4. Check Evolution Chain - See a Pokemon' Evolution Chain"
+  puts "*" * 100
+  puts
+  puts
+
+end
+
+
+menu
