@@ -8,4 +8,12 @@ module Validator
 
     true
   end
+
+  def valid_pokeno(pokeno)
+
+    return false if pokeno < 1 || pokeno > 1025
+
+    true
+
+  end
 end

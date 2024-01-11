@@ -11,25 +11,35 @@ include Poke_Query
 class Pokemon
   attr_accessor :name, :id, :height, :weight, :base_experience, :types,
                 :abilities, :moves, :move_count
-
-  def initialize(name)
+  # The name supplied from user input
+  def initialize(name = 'Tangela')
     @name = name
     get_pokemon_info
   end
 
-  def get_pokemon_info
-    uri = URI("https://pokeapi.co/api/v2/pokemon/#{@name}")
-    res = Net::HTTP.get_response(uri)
-    result = JSON.parse(res.body)
-    @height = result['height']
-    @weight = result['weight']
-    @base_experience = result['base_experience']
-    @types = result['types']
-    @abilities = result['abilities']
-    @id = result['id']
-    @moves = result['moves']
+  # init a new Pokemon object by passing in the result array from the API call
+  # this type of Pokemon is not created by user input - rather being loaded from some source that
+  # contains all of the needed values that define a Pokemon.
+  def self.create(*stats)
+    @name = stats["name"]
+    @id = stats["id"]
+    @height = stats["height"]
+    @base_experience = stats['base_experience']
+    @types = stats['types']
+    @abilities = stats['abilities']
+    @moves = stats['moves']
     @move_count = Array(@moves).length
-    Poke_Query.g
+  end
+
+  def get_pokemon_info
+    stats = Poke_Query::get_pokemon_by_name(@name) # -> array
+    @id = stats["id"]
+    @height = stats['height']
+    @base_experience = stats['base_experience']
+    @types = stats['types']
+    @abilities = stats['abilities']
+    @moves = stats['moves']
+    @move_count = Array(@moves).length
   end
 
   # @return [nil]
@@ -80,6 +90,8 @@ class Pokemon
 #{level_learned}".rjust(10)
     end
   end
+
+
 end
 
 # move["move"]["name"]["version_group_details"]
