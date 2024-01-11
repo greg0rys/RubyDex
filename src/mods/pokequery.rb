@@ -49,9 +49,18 @@ module Poke_Query
   end
 
   def run_query(query_type = 'name', query_value = 'Tangela')
-    uri = URI("#{$query[query_type]}#{query_value}")
-    res = Net::HTTP.get_response(uri)
-    return JSON.parse(res.body) if res.body.length.positive?
+    begin
+      uri = URI("#{$query[query_type]}#{query_value}")
+      res = Net::HTTP.get_response(uri)
+      return JSON.parse(res.body) if res.body.length.positive?
+
+      raise JSON::ParserError
+
+    rescue
+      puts "we r safe"
+      return false
+    end
+
 
     puts "#{res.code} -- Invalid Response"
     false

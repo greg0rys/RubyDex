@@ -2,3 +2,6 @@ GET https://pokeapi.co/api/v2/pokemon/ditto
 Accept: application/json
 
 ###
+
+GET https://pokeapi.co/api/v2/move/150/
+Accept: application/json

@@ -10,11 +10,15 @@ include Poke_Query
 
 class Pokemon
   attr_accessor :name, :id, :height, :weight, :base_experience, :types,
-                :abilities, :moves, :move_count
+                :abilities, :moves, :move_count, :has_stats
   # The name supplied from user input
   def initialize(name = 'Tangela')
     @name = name
-    get_pokemon_info
+    @id = @height = @weight = @base_experience = @types = @abilities = @moves = @move_count = nil
+    unless get_pokemon_info
+      puts "Unable to get data about #{name} ERROR CODE 5"
+      @has_stats = false
+    end
   end
 
   # init a new Pokemon object by passing in the result array from the API call
@@ -31,8 +35,13 @@ class Pokemon
     @move_count = Array(@moves).length
   end
 
+  # @return false if the query raises an error true if else
   def get_pokemon_info
-    stats = Poke_Query::get_pokemon_by_name(@name) # -> array
+    # unless Poke_Query returns true; return false from this method
+    unless (stats = Poke_Query::get_pokemon_by_name(@name))
+      return false
+    end
+
     @id = stats["id"]
     @height = stats['height']
     @base_experience = stats['base_experience']
@@ -40,10 +49,16 @@ class Pokemon
     @abilities = stats['abilities']
     @moves = stats['moves']
     @move_count = Array(@moves).length
+    @has_stats = true
+
+    true # return true
   end
 
   # @return [nil]
   def pretty_print
+    unless @has_stats
+      puts "Error #{@name} doesn't have any stats to display "
+    end
     puts "Name: #{@name}"
     puts "PokeID: #{@id}"
     puts "Height: #{@height}"
