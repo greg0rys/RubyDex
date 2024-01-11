@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'pokemon'
+require_relative 'src/pokemon'
 $first_run = false # used for formatting output
 
 print 'Enter a Pokemon name: '

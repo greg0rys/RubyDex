@@ -16,7 +16,6 @@ class Pokemon
     @name = name
     @id = @height = @weight = @base_experience = @types = @abilities = @moves = @move_count = nil
     unless get_pokemon_info
-      puts "Unable to get data about #{name} ERROR CODE 5"
       @has_stats = false
     end
   end
