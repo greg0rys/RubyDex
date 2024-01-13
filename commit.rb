@@ -12,4 +12,8 @@ puts "Created reports/#{all_off}.md"
 puts "Created reports/#{cop_correctable}.md"
 
 puts 'Time to commit'
+
+puts 'Enter your commit message'
+system("sleep 4")
 system("git add . && git commit && git push")
+
