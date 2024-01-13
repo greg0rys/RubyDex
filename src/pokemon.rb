@@ -72,7 +72,25 @@ class Pokemon
 
     @types.each { |type| puts "\t #{type['type']['name'].capitalize}" }
   end
+  
+  # Extract the moves out to the API calls data struct
+  # Store moves that have a level = 0 into the TMs array
+  # Store all moves that have a level > 0 into a level_moves hash (name=>level) key value
+  def store_moves
+    return false unless @moves.length.positive?
+    
+    @moves.each do |move|
+      move_name = move['move']['name'].tr('-', ' ').capitalize
+      level = move['version_group_details'][0]['level_learned_at']
 
+      if level.zero? # if level = 0 then it's learned by TM
+        @@TMs_compat.push(move_name) # push onto the tms_Array
+      else
+        @@level_moves[move_name] = level # else it's learned by level up
+      end
+    end
+    
+  end
   # @return [nil]
   def pretty_print
     puts "Error #{@name} doesn't have any stats to display " unless @has_stats
