@@ -1,1 +1,6 @@
- [view the project site](https://goyos.club/projects/ruby_dex)
+```ruby
+slogan = 'who's that Pokemon?'
+sprintf("%s", slogan)
+```
+
+# The Ultimate Pokemon App
