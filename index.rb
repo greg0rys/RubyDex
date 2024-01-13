@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_relative 'src/pokemon'
+require_relative 'src/classes/pokemon'
 $first_run = false # used for formatting output
 
 print 'Enter a Pokemon name: '
 pkmn_name = gets.chomp
 puts
 user_choice = Pokemon.new(pkmn_name)
-exit(5) unless user_choice.has_stats
+# exit(5) unless user_choice.has_stats
 
 user_choice.pretty_print
 puts

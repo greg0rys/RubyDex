@@ -1,5 +1,5 @@
-Inspecting 6 files
-CCCCWC
+Inspecting 7 files
+CCCCCWC
 
 Offenses:
 
@@ -27,21 +27,19 @@ src/mods/pokequery.rb:25:81: C: Style/CaseEquality: Avoid the use of the case eq
 src/mods/pokequery.rb:61:18: C: Style/GlobalVars: Do not introduce global variables.
     uri = URI("#{$endpoint[query_type]}#{query_value}")
                  ^^^^^^^^^
+src/mods/query_helpers.rb:18:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
 src/mods/string_cleaners.rb:8:1: C: Style/Documentation: Missing top-level documentation comment for module String_Cleaners.
 module String_Cleaners
 ^^^^^^^^^^^^^^^^^^^^^^
 src/mods/validator.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for module Validator.
 module Validator
 ^^^^^^^^^^^^^^^^
-src/mods/validator.rb:6:7: C: Naming/PredicateName: Rename is_valid_string to valid_string?.
-  def is_valid_string(_s)
-      ^^^^^^^^^^^^^^^
-src/mods/validator.rb:6:23: W: Lint/UnderscorePrefixedVariableName: Do not use prefix _ for a variable that is used.
-  def is_valid_string(_s)
-                      ^^
-src/mods/validator.rb:6:23: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
-  def is_valid_string(_s)
-                      ^^
+src/mods/validator.rb:6:21: W: Lint/UnderscorePrefixedVariableName: Do not use prefix _ for a variable that is used.
+  def valid_string?(_s)
+                    ^^
+src/mods/validator.rb:6:21: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  def valid_string?(_s)
+                    ^^
 src/pokemon.rb:3:1: C: Style/GlobalVars: Do not introduce global variables.
 $x = 0
 ^^
@@ -58,5 +56,4 @@ src/pokemon.rb:114:16: C: Style/GlobalVars: Do not introduce global variables.
       break if $x == 5
                ^^
 
-6 files inspected, 18 offenses detected
-
+7 files inspected, 18 offenses detected, 1 offense autocorrectable
