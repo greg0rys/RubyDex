@@ -13,7 +13,9 @@ puts "Created reports/#{cop_correctable}.md"
 
 puts 'Time to commit'
 
-puts 'Enter your commit message using nano to complete push'
+print "Enter a commit message: "
+msg = gets.chomp
+puts
 system("sleep 1")
-system("git add . && git commit && git push")
+system("git add . && git commit -m '#{msg}' && git push")
 
