@@ -14,6 +14,6 @@ puts "Created reports/#{cop_correctable}.md"
 puts 'Time to commit'
 
 puts 'Enter your commit message using nano to complete push'
-system("sleep 2")
+system("sleep 1")
 system("git add . && git commit && git push")
 
