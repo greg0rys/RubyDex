@@ -10,8 +10,8 @@ system("rubocop -f m -E >> #{PATH}#{all_off}.md")
 cop_correctable = "#{d.strftime('%m-%d-%Y-%H:%M')}_cop_fixable"
 system("rubocop -f m -E --display-only-correctable >> #{PATH}#{cop_correctable}.md")
 
-puts "Created reports/#{all_off}.md"
-puts "Created reports/#{cop_correctable}.md"
+puts "Created ~/RubyDex/reports/#{all_off}.md"
+puts "Created ~/RubyDex/reports/#{cop_correctable}.md"
 
 puts "-" * 10
 
@@ -22,4 +22,5 @@ msg = gets.chomp
 puts
 system('sleep 1')
 system("git add . && git commit -m '#{msg}' && git push")
-
+system('clear')
+system('echo Commit to Origin Master Done')
