@@ -5,17 +5,17 @@ require 'net/http'
 require 'openssl'
 require 'json'
 
-
 module Poke_Query
   # store all of the different queries in a hash
   # this is globally accessible
 
   $endpoint = {
-    'name'   => 'https://pokeapi.co/api/v2/pokemon/',
+    'name' => 'https://pokeapi.co/api/v2/pokemon/',
     'number' => 'https://pokeapi.co/api/v2/pokemon/',
-    'type'   => 'https://pokeapi.co/api/v2/pokemon/',
+    'type' => 'https://pokeapi.co/api/v2/pokemon/',
     'machine' => 'https://pokeapi.co/api/v2/machine/',
-    'move' => 'https://pokeapi.co/api/v2/move/'
+    'move' => 'https://pokeapi.co/api/v2/move/',
+    'evolution_chain' => 'https://pokeapi.co/api/v2/evolution-chain/'
   }
 
   def get_pokemon_by_name(name = 'Tangela')
@@ -35,9 +35,9 @@ module Poke_Query
   end
 
   def get_pokemon_by_number(number = '1')
-
     # return false unless valid_pokeno returns true
-    return false unless Validator::valid_pokeno(number)
+    return false unless Validator.valid_pokeno(number)
+
     puts "You did not supply a Pokemon number, using the default #{number}" if number === 1
 
     # return the query results to the caller
@@ -45,28 +45,24 @@ module Poke_Query
       'number',
       number
     )
-
   end
 
-  #@param query_type - the type of query being ran
+  def evolution_chain
+    return false if @id.nil?
+
+    @@evolution_chain = run_query('evolution_chain', @id)
+  end
+  # @param query_type - the type of query being ran
   def run_query(query_type = 'name', query_value = 'Tangela')
+    puts "Querying endpoint #{query_type.capitalize}..."
+    uri = URI("#{$endpoint[query_type]}#{query_value}")
+    res = Net::HTTP.get_response(uri)
+    puts 'Query complete... Checking for valid response'
+    return JSON.parse(res.body) if res.body.length.positive?
 
-    begin
-      puts "Querying endpoint #{query_type}"
-      uri = URI("#{$endpoint[query_type]}#{query_value}")
-      res = Net::HTTP.get_response(uri)
-      puts "Query complete... Checking for valid response"
-      return JSON.parse(res.body) if res.body.length.positive?
-
-      raise JSON::ParserError
-
-    rescue
-
-      puts "#{res.code} -- ERROR"
-
-      return false
-    end
-
+    raise JSON::ParserError
+  rescue StandardError
+    puts "#{res.code} -- ERROR"
+    false
   end
-
 end

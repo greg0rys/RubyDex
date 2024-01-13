@@ -6,27 +6,33 @@ require 'net/http'
 require 'openssl'
 require 'json'
 require_relative 'mods/pokequery'
-include Poke_Query
 
+include Poke_Query
 class Pokemon
+
   attr_accessor :name, :id, :height, :weight, :base_experience, :types,
                 :abilities, :moves, :move_count, :has_stats
+
   # The name supplied from user input
   def initialize(name = 'Tangela')
     @name = name
     @id = @height = @weight = @base_experience = @types = @abilities = @moves = @move_count = nil
-    unless get_pokemon_info
-      @has_stats = false
-    end
+    # array to hold all compat tm moves for this pokemon
+    @@TMs_compat = []
+    # hash to hold all the moves learned by level
+    @@level_moves = {}
+    return if get_pokemon_info
+
+    @has_stats = false
   end
 
   # init a new Pokemon object by passing in the result array from the API call
   # this type of Pokemon is not created by user input - rather being loaded from some source that
   # contains all of the needed values that define a Pokemon.
   def self.create(*stats)
-    @name = stats["name"]
-    @id = stats["id"]
-    @height = stats["height"]
+    @name = stats['name']
+    @id = stats['id']
+    @height = stats['height']
     @base_experience = stats['base_experience']
     @types = stats['types']
     @abilities = stats['abilities']
@@ -37,36 +43,48 @@ class Pokemon
   # @return false if the query raises an error true if else
   def get_pokemon_info
     # unless Poke_Query returns true; return false from this method
-    unless (stats = Poke_Query::get_pokemon_by_name(@name))
+    unless (stats = Poke_Query.get_pokemon_by_name(@name))
       return false
     end
 
-    @id = stats["id"]
+    @id = stats['id']
     @height = stats['height']
     @base_experience = stats['base_experience']
     @types = stats['types']
     @abilities = stats['abilities']
     @moves = stats['moves']
-    @move_count = Array(@moves).length
+    @move_count = @moves.length
     @has_stats = true
 
     true # return true
   end
 
+  def display_abilities
+    return false unless @abilities.length.positive?
+
+    @abilities.each { |ability| puts "\t #{ability['ability']['name'].capitalize}" }
+  end
+
+  # @return false if @types is empty
+  # display this Pokemons type
+  def display_types
+    return false unless @types.length.positive?
+
+    @types.each { |type| puts "\t #{type['type']['name'].capitalize}" }
+  end
+
   # @return [nil]
   def pretty_print
-    unless @has_stats
-      puts "Error #{@name} doesn't have any stats to display "
-    end
+    puts "Error #{@name} doesn't have any stats to display " unless @has_stats
     puts "Name: #{@name}"
     puts "PokeID: #{@id}"
     puts "Height: #{@height}"
     puts "Weight: #{@weight}"
     puts "Base Experience: #{@base_experience}"
     puts 'Abilities:'
-    @abilities.each { |ability| puts "\t #{ability['ability']['name']}" }
-    puts 'Type:'
-    @types.each { |type| puts "\t #{type['type']['name']}" }
+    display_abilities
+    puts 'Types:'
+    display_types
   end
 
   def print_moves
@@ -94,18 +112,19 @@ class Pokemon
   # assignment statements etc
   def verbose_move_list
     @moves.each do |move|
-      level_learned = if (move['version_group_details'][0]['level_learned_at']).zero?
-                        1
-                      else
-                        move['version_group_details'][0]['level_learned_at']
-                      end
+      move_name = move['move']['name'].tr('-', ' ').capitalize
+      level = move['version_group_details'][0]['level_learned_at']
 
-      puts "#{move['move']['name'].tr('-', ' ').capitalize} => Level: \
-#{level_learned}".rjust(10)
+      if level.zero? # if level = 0 then it's learned by TM
+        @@TMs_compat.push(move_name) # push onto the tms_Array
+      else
+        @@level_moves[move_name] = level # else it's learned by level up
+      end
     end
+
+    @@level_moves.each { |k, v| puts "#{k} => #{v}" }
+    @@TMs_compat.each { |tm| puts "TM: #{tm}" }
   end
-
-
 end
 
 # move["move"]["name"]["version_group_details"]

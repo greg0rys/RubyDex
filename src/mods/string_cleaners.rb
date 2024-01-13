@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-=begin
-@author Greg
-
-
-String_Cleaners contains helper methods to clean various types of strings in the application.
-=end
+# @author Greg
+#
+#
+# String_Cleaners contains helper methods to clean various types of strings in the application.
 
 module String_Cleaners
   # Remove the "-" character from a given string
@@ -18,6 +16,4 @@ module String_Cleaners
 
     dash_string.tr('-', ' ')
   end
-
-
 end
