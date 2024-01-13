@@ -2,6 +2,7 @@
 
 require 'date'
 system("clear")
+system("echo Creating Rubocop reports..")
 d = DateTime.now
 PATH = 'reports/'
 all_off = "#{d.strftime('%m-%d-%Y-%H:%M')}_all_offenses"
