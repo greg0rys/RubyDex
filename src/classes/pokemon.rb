@@ -8,14 +8,18 @@ require 'json'
 require_relative 'mods/pokequery'
 
 include Poke_Query
+# Model a Pocket Monster in the system
 class Pokemon
   attr_accessor :name, :id, :height, :weight, :base_experience, :types,
-                :abilities, :moves, :move_count, :has_stats
+                :abilities, :moves, :move_count, :tms_compat,
+                :level_moves, :evolution_chain
 
   # The name supplied from user input
   def initialize(name = 'Tangela')
     @name = name
-    @id = @height = @weight = @base_experience = @types = @abilities = @moves = @move_count = nil
+    @id = @height = @weight = @base_experience = @types = @abilities = nil
+    @moves = @move_count = nil
+
     # array to hold all compat tm moves for this pokemon
     @tms_compat = []
     # hash to hold all the moves learned by level
@@ -24,21 +28,7 @@ class Pokemon
     @evolution_chain = {}
     return if get_pokemon_info
 
-    @has_stats = false
-  end
-
-  # init a new Pokemon object by passing in the result array from the API call
-  # this type of Pokemon is not created by user input - rather being loaded from some source that
-  # contains all of the needed values that define a Pokemon.
-  def self.create(*stats)
-    @name = stats['name']
-    @id = stats['id']
-    @height = stats['height']
-    @base_experience = stats['base_experience']
-    @types = stats['types']
-    @abilities = stats['abilities']
-    @moves = stats['moves']
-    @move_count = Array(@moves).length
+    @@has_stats = false
   end
 
   # @return false if the query raises an error true if else
@@ -55,7 +45,7 @@ class Pokemon
     @abilities = stats['abilities']
     @moves = stats['moves']
     @move_count = @moves.length
-    @has_stats = true
+    @@has_stats = true
     true # return true
   end
 
@@ -75,7 +65,8 @@ class Pokemon
 
   # Extract the moves out to the API calls data struct
   # Store moves that have a level = 0 into the TMs array
-  # Store all moves that have a level > 0 into a level_moves hash (name=>level) key value
+  # Store all moves that have a level > 0 into -
+  #   a level_moves hash (name=>level) key value
 
   def store_moves
     return false unless @moves.length.positive?
@@ -94,7 +85,7 @@ class Pokemon
 
   # @return [nil]
   def pretty_print
-    puts "Error #{@name} doesn't have any stats to display " unless @has_stats
+    puts "Error #{@name} doesn't have any stats to display " unless @@has_stats
     puts "Name: #{@name}"
     puts "PokeID: #{@id}"
     puts "Height: #{@height}"
