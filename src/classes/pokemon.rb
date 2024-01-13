@@ -5,7 +5,7 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 require 'json'
-require_relative 'mods/pokequery'
+require_relative '../mods/pokequery'
 
 include Poke_Query
 # Model a Pocket Monster in the system
@@ -98,11 +98,26 @@ class Pokemon
   end
 
   def print_moves
-    puts "#{@name.capitalize}'s Moves Include: "
-    @moves.each do |move|
-      puts "- #{move['move']['name']}"
-      $x += 1
-      break if $x == 5
+    return false unless @move_count.positive?
+
+    store_moves
+    puts "#{@name.capitalize} can learn #{@move_count} move(s)"
+    print "  * #{@tms_compat.length} learned by TM - #{@level_moves.length} learned by level up"
+    puts 
+    puts "1 to display level moves\n2 to display TM moves\n3 to display all\n4 to quit"
+    print "Enter a choice: "
+    choice = Menu_Helper::move_input
+    case choice
+    when 1
+      display_level_moves
+    when 2
+      display_tm_moves
+    when 3
+      display_all_moves
+    when 4
+      exit(1) # will change to call main menu again
+    else
+      puts "Invalid option #{choice}"
     end
   end
 
