@@ -1,6 +1,6 @@
 ```ruby
-slogan = 'who's that Pokemon?'
-sprintf("%s", slogan)
+slogan = 'Who's that Pokemon?'
+sprintf("%s", slogan) # => Who's that Pokemon?
 ```
 
 # The Ultimate Pokemon App
