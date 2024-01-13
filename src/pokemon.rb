@@ -9,7 +9,6 @@ require_relative 'mods/pokequery'
 
 include Poke_Query
 class Pokemon
-
   attr_accessor :name, :id, :height, :weight, :base_experience, :types,
                 :abilities, :moves, :move_count, :has_stats
 
@@ -18,9 +17,11 @@ class Pokemon
     @name = name
     @id = @height = @weight = @base_experience = @types = @abilities = @moves = @move_count = nil
     # array to hold all compat tm moves for this pokemon
-    @@TMs_compat = []
+    @tms_compat = []
     # hash to hold all the moves learned by level
-    @@level_moves = {}
+    @level_moves = {}
+    # hash to store the evolution chain new_form => trigger
+    @evolution_chain = {}
     return if get_pokemon_info
 
     @has_stats = false
@@ -55,7 +56,6 @@ class Pokemon
     @moves = stats['moves']
     @move_count = @moves.length
     @has_stats = true
-
     true # return true
   end
 
@@ -72,25 +72,26 @@ class Pokemon
 
     @types.each { |type| puts "\t #{type['type']['name'].capitalize}" }
   end
-  
+
   # Extract the moves out to the API calls data struct
   # Store moves that have a level = 0 into the TMs array
   # Store all moves that have a level > 0 into a level_moves hash (name=>level) key value
+
   def store_moves
     return false unless @moves.length.positive?
-    
+
     @moves.each do |move|
       move_name = move['move']['name'].tr('-', ' ').capitalize
       level = move['version_group_details'][0]['level_learned_at']
 
       if level.zero? # if level = 0 then it's learned by TM
-        @@TMs_compat.push(move_name) # push onto the tms_Array
+        @tms_compat.push(move_name) # push onto the tms_Array
       else
-        @@level_moves[move_name] = level # else it's learned by level up
+        @level_moves[move_name] = level # else it's learned by level up
       end
     end
-    
   end
+
   # @return [nil]
   def pretty_print
     puts "Error #{@name} doesn't have any stats to display " unless @has_stats
@@ -128,6 +129,7 @@ class Pokemon
   # the \ in the puts statement prevents the line break
   # anytime a statement needs to run to the next line you must use \ even in
   # assignment statements etc
+
   def verbose_move_list
     @moves.each do |move|
       move_name = move['move']['name'].tr('-', ' ').capitalize
@@ -140,7 +142,7 @@ class Pokemon
       end
     end
 
-    @@level_moves.each { |k, v| puts "#{k} => #{v}" }
+    @@level_moves.each { |k, v| puts "#{k} Level: #{v}" }
     @@TMs_compat.each { |tm| puts "TM: #{tm}" }
   end
 end

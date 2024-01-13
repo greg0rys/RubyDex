@@ -1,0 +1,10 @@
+Metrics/MethodLength:
+  Enabled: false
+AllCops:
+  NewCops: enable
+Style/MixinUsage:
+  Enabled: false
+Naming/ClassAndModuleCamelCase:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false

@@ -5,6 +5,8 @@ require 'net/http'
 require 'openssl'
 require 'json'
 
+# Module controls all queries made to the pokeapi
+# The cousin of DB_Query
 module Poke_Query
   # store all of the different queries in a hash
   # this is globally accessible
@@ -38,7 +40,7 @@ module Poke_Query
     # return false unless valid_pokeno returns true
     return false unless Validator.valid_pokeno(number)
 
-    puts "You did not supply a Pokemon number, using the default #{number}" if number === 1
+    puts "You did not supply a Pokemon number, using the default #{number}" if number == 1
 
     # return the query results to the caller
     run_query(
@@ -50,9 +52,10 @@ module Poke_Query
   def evolution_chain
     return false if @id.nil?
 
-    @@evolution_chain = run_query('evolution_chain', @id)
+    run_query('evolution_chain', @id) # return an array of evolution chains
   end
   # @param query_type - the type of query being ran
+
   def run_query(query_type = 'name', query_value = 'Tangela')
     puts "Querying endpoint #{query_type.capitalize}..."
     uri = URI("#{$endpoint[query_type]}#{query_value}")
