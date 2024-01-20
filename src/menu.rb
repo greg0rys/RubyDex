@@ -19,6 +19,8 @@ module Menu
     puts '2. Search by Pokedex Number - Find a Pokemon Given ID'
     puts '3. Create a Team - Store your current party for quick recall'
     puts "4. Check Evolution Chain - See a Pokemon' Evolution Chain"
+    puts '5. Number of Pokemon in Storage'
+    puts '6. List Pokemon in Storage'
     puts '*' * 100
     print 'Enter Menu Choice: '
     user_input = Integer(gets.chomp) #convert the string input to an int
@@ -38,6 +40,14 @@ module Menu
         Driver::create_team
       when 4
         Driver::get_evolution_chain
+      when 5
+        puts "Total Pokemon in Storage: #{Driver::store_count}"
+        main_menu
+      when 6
+        # need to add checks for zero in storage!
+        Driver::list_pokemon_storage
+        system('sleep 2')
+        main_menu
       else
         puts "INVALID CHOICE TRY AGAIN"
         main_menu
