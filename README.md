@@ -1,5 +1,5 @@
 ```ruby
-slogan = 'Who's that Pokemon?'
+slogan = "Who's that Pokemon?"
 sprintf("%s", slogan) # => Who's that Pokemon?
 ```
 
