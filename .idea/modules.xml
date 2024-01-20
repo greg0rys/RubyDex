@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Marshal.4.iml" filepath="$PROJECT_DIR$/.idea/modules/Marshal.4.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/RubyDex.iml" filepath="$PROJECT_DIR$/.idea/RubyDex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/parser-3.3.0.iml" filepath="$PROJECT_DIR$/.idea/modules/parser-3.3.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/specifications.iml" filepath="$PROJECT_DIR$/.idea/modules/specifications.iml" />
     </modules>
   </component>
 </project>
