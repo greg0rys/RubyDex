@@ -5,7 +5,7 @@ require 'net/http'
 require 'openssl'
 require 'json'
 
-# Module controls all queries made to the pokeapi
+# Module controls all queries made to the PokeAPI
 # The cousin of DB_Query
 module Poke_Query
   # store all of the different queries in a hash

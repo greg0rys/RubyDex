@@ -11,11 +11,9 @@ require_relative './classes/poke_storage'
 include Poke_Query
 
 module Driver
-
-  attr_reader :store_count
-
+ attr_reader :store_count
  @store = Poke_Storage.new
-  @store_count = @store.count
+ @store_count = @store.count
   # search for a Pokemon by name using the query
   # TODO this method needs to be able to display the error the query has the potential to throw
   #
@@ -28,7 +26,7 @@ module Driver
     # final
     puts "Success #{@store.poke_hash[pkmn_name].name.capitalize} was captured!"
     Menu.new_pokemon_menu(@store.poke_hash[pkmn_name])
-    puts "m"
+
 
   end
 end
