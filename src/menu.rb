@@ -4,6 +4,7 @@
 require_relative 'driver'
 include Driver
 
+# The menu for the application that users will interact with
 module Menu
 
   def put_lines
@@ -52,6 +53,8 @@ module Menu
     when 7
       Driver::remove_pokemon
       main_menu
+    when 8
+      Driver::end_program
     else
       puts 'INVALID CHOICE TRY AGAIN'
       main_menu

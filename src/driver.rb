@@ -10,11 +10,16 @@ require_relative 'classes/poke_storage'
 
 include Poke_Query
 
+# The application driver
 module Driver
   attr_reader :store_count
 
+  EXIT_SUCCESS = 2500
+  EXIT_ERROR = 4040
+
   @store = Poke_Storage.new
   @store_count = 0
+  @generic_pokemon = Pokemon.new # used to create a pokemon object with name
   # search for a Pokemon by name using the query
   # TODO this method needs to be able to display the error the query has the potential to throw
   #
@@ -52,4 +57,13 @@ module Driver
     puts "Success #{name_to_remove} was removed from storage"
     @store_count -= 1
   end
+
+  # the user has chosen to end the program code 2500
+  # TODO: Have this method delete everything stored in the hash after
+  # it has been moved to a save area. RedisDB might be the best here. 
+  def end_program
+    puts "Thanks for using me goodbye! #{EXIT_SUCCESS}"
+    exit(EXIT_SUCCESS)
+  end
+
 end
