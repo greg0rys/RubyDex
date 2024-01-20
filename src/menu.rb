@@ -21,6 +21,7 @@ module Menu
     puts "4. Check Evolution Chain - See a Pokemon' Evolution Chain"
     puts '5. Number of Pokemon in Storage'
     puts '6. List Pokemon in Storage'
+    puts '7. Remove a Pokemon from Storage'
     puts '*' * 100
     print 'Enter Menu Choice: '
     user_input = Integer(gets.chomp) #convert the string input to an int
@@ -47,6 +48,9 @@ module Menu
         # need to add checks for zero in storage!
         Driver::list_pokemon_storage
         system('sleep 2')
+        main_menu
+      when 7
+        Driver::remove_pokemon
         main_menu
       else
         puts "INVALID CHOICE TRY AGAIN"
@@ -89,8 +93,15 @@ module Menu
     pocket_monster.print_moves
     pocket_monster.print_move_count
 
+    puts 'Press return to go back to the Main Menu...'
 
-    main_menu
+
+    # if user just pushed return then == '' will be true
+    # implement the ability to press return to go back to main menu after all actions
+    main_menu if gets.chomp == '' # this is the main menu call that is currenlty causing it to
+    # loop to
+    # main change
+    # this l8r
   end
 
   # module end

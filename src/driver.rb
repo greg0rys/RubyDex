@@ -36,4 +36,20 @@ module Driver
    #the value in the Pokehash is a pokemon object so call .name accessor
    @store.poke_hash.each {| k,v| puts "#{idx}. #{v.name.capitalize}"; idx += 1}
  end
+
+ def remove_pokemon
+   print "Enter the Pokemons name you wish to remove: "
+   name_to_remove = gets.chomp
+   removed = @store.remove_pokemon(name_to_remove)
+
+   unless removed
+     puts "Error! #{name_to_remove} was not found in storage"
+     return # return back to the menu
+   end
+
+   puts "Success #{name_to_remove} was removed from storage"
+   @store_count -= 1
+
+
+ end
 end

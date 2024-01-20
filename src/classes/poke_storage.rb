@@ -18,4 +18,19 @@ class Poke_Storage
     @count += 1
     @has_pokemon = true if @count.positive?
   end
+
+  # Remove a Pokemon from the hash
+  # @param pmkn_name the name of the pokemon to remove
+  # @return false unless the Pokemons name is found in the hash
+  def remove_pokemon(pkmn_name)
+    return false unless contains?(pkmn_name)
+    @poke_hash.delete(pkmn_name)
+    true # return true
+
+  end
+
+  # Check the hash to see if the Pokemon is contained in the structure
+  def contains?(pkmn_name)
+    @poke_hash.any? {|k,v| k == pkmn_name}
+  end
 end
