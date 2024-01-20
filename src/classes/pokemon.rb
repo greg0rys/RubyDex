@@ -5,8 +5,7 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 require 'json'
-require_relative 'mods/pokequery'
-
+require_relative '../mods/pokequery'
 include Poke_Query
 # Model a Pocket Monster in the system
 class Pokemon

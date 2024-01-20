@@ -65,7 +65,7 @@ module Poke_Query
 
     raise JSON::ParserError
   rescue StandardError
-    puts "#{res.code} -- ERROR"
+    puts "ERROR UNABLE TO COMPLETE QUERY #{query_value}"
     false
   end
 end
