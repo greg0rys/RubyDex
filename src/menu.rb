@@ -74,6 +74,15 @@ module Menu
     end
   end
 
+  def new_pokemon_menu(pocket_monster)
+    pocket_monster.pretty_print
+    pocket_monster.print_moves
+    pocket_monster.print_move_count
+
+
+    main_menu
+  end
+
   # module end
   end
   

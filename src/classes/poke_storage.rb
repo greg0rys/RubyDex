@@ -5,7 +5,7 @@ Poke_Storage is used to cache data about pokemon when they're called to reserve 
 as well, it allows us to facilitate the idea of a hosted 'team'
 =end
 class Poke_Storage
-  attr_accessor :has_pokemon, :count
+  attr_accessor :has_pokemon, :count, :poke_hash
 
   def initialize
     @has_pokemon = false
@@ -14,7 +14,7 @@ class Poke_Storage
   end
 
   def add_pokemon(pocket_monster)
-    @poke_hash[pocket_monster.get_name] = Pokemon.new(pocket_monster)
+    @poke_hash[pocket_monster.name] = pocket_monster
     @count += 1
     @has_pokemon = true if @count.positive?
   end

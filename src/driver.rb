@@ -12,9 +12,10 @@ include Poke_Query
 
 module Driver
 
-  attr_reader :runs
+  attr_reader :store_count
 
  @store = Poke_Storage.new
+  @store_count = @store.count
   # search for a Pokemon by name using the query
   # TODO this method needs to be able to display the error the query has the potential to throw
   #
@@ -22,9 +23,11 @@ module Driver
     print 'Enter a Pokemon name: '
     pkmn_name = gets.chomp
     puts
-    user_choice = Pokemon.new(pkmn_name)
-    puts "Success collected #{user_choice.name}"
-    Menu.move_menu(user_choice)
+    #don't add the pokemon this way make sure this is a valid pokemon first
+    @store.add_pokemon(Pokemon.new(pkmn_name)) # we will need to ensure this a pokemon before making this
+    # final
+    puts "Success #{@store.poke_hash[pkmn_name].name.capitalize} was captured!"
+    Menu.new_pokemon_menu(@store.poke_hash[pkmn_name])
 
   end
 end
