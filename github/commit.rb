@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'date'
-system("clear")
-system("echo Creating Rubocop reports..")
+system('clear')
+system('echo Creating Rubocop reports..')
 d = DateTime.now
 PATH = 'reports/'
 all_off = "#{d.strftime('%m-%d-%Y-%H:%M')}_all_offenses"
@@ -13,7 +13,7 @@ system("rubocop -f m -E --display-only-correctable >> #{PATH}#{cop_correctable}.
 puts "Created ~/RubyDex/reports/#{all_off}.md"
 puts "Created ~/RubyDex/reports/#{cop_correctable}.md"
 
-puts "-" * 10
+puts '-' * 10
 
 puts 'Time to commit'
 

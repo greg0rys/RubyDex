@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'src/classes/pokemon'
-require_relative './src/menu'
+require_relative 'src/menu'
 include Menu
 Menu.main_menu
 $first_run = false # used for formatting output
