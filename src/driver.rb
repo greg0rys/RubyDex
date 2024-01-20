@@ -28,6 +28,7 @@ module Driver
     # final
     puts "Success #{@store.poke_hash[pkmn_name].name.capitalize} was captured!"
     Menu.new_pokemon_menu(@store.poke_hash[pkmn_name])
+    puts "m"
 
   end
 end
