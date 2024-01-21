@@ -7,6 +7,8 @@ include Driver
 # The menu for the application that users will interact with
 module Menu
 
+  public
+  EXIT_SUCCESS = 2500
   def put_lines
     2.times { puts }
   end
@@ -31,24 +33,29 @@ module Menu
   end
 
   def process_choice(choice)
-    return NameError if choice.zero?
 
+    Driver::end_program if choice.zero?
+
+  
     case choice
     when 1
       Driver::search_name
+      main_menu
     when 2
       Driver::search_idx_num
+      main_menu
     when 3
       Driver::create_team
+      main_menu
     when 4
       Driver::get_evolution_chain
+      main_menu
     when 5
       puts "Total Pokemon in Storage: #{Driver::store_count}"
       main_menu
     when 6
       # need to add checks for zero in storage!
       Driver::list_pokemon_storage
-      system('sleep 2')
       main_menu
     when 7
       Driver::remove_pokemon
@@ -59,11 +66,13 @@ module Menu
       puts 'INVALID CHOICE TRY AGAIN'
       main_menu
     end
+
   end
 
   # menu for displaying Pokemon moves
   # @param pocket_monster a Pokemon Object to get move data
   def move_menu(pocket_monster)
+    return unless pokemon?(pocket_monster)
     return false unless pocket_monster.valid? # TODO: make this valid? meth
 
     puts "Choose from the following:\n1. Display Level Moves\n2. Display TM moves\n3. Display All Moves\n4. Skip Moves"
@@ -81,7 +90,6 @@ module Menu
       pocket_monster.display_tm_moves
     when 3
       pocket_monster.display_all_moves
-    when 4
     else
       puts 'Unknown error occured restarting..'
     end
@@ -102,6 +110,19 @@ module Menu
     # main change
     # this l8r
   end
+
+  private
+
+  def pokemon?(pocket_monster)
+    unless pocket_monster.is_a(Pokemon)
+      puts 'Error Invalid Type: Pokemon required'
+      exit(4040)
+    end
+
+    true
+   
+  end
+  
 
   # module end
 end
