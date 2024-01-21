@@ -8,7 +8,7 @@ system('echo Creating Rubocop reports..')
 d = DateTime.now
 PATH = 'reports/'
 all_off = "#{d.strftime('%m-%d-%Y-%H:%M')}_all_offenses"
-`../cleaners/clean_reports.rb`
+`./cleaners/clean_reports.rb`
 system("rubocop -f m -E >> #{PATH}#{all_off}.md")
 cop_correctable = "#{d.strftime('%m-%d-%Y-%H:%M')}_cop_fixable"
 system("rubocop -f m -E --display-only-correctable >> #{PATH}#{cop_correctable}.md")
