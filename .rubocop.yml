@@ -12,3 +12,7 @@ Style/ColonMethodCall:
   Enabled: false
 Layout/EmptyLinesAroundModuleBody:
   Enabled: false
+Layout/TrailingWhitespace:
+  Enabled: false
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false

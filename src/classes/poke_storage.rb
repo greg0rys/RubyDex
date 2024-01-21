@@ -38,9 +38,12 @@ class Poke_Storage
     @poke_hash.any? { |k, _v| k == pocket_monster.name }
   end
 
+  # @return a Pokemon Object from the storage struct
+  # Could return false the monster isn't in the struct
   def get_pokemon(pocket_monster)
+    return false if empty?
     return false unless correct_param?(pocket_monster)
-    return nil unless contains?(pocket_monster.name)
+    return false unless contains?(pocket_monster.name)
 
     # return the pokemon requested from the hash
     @poke_hash[pocket_monster.name]
@@ -73,15 +76,14 @@ class Poke_Storage
     @poke_hash = {}
   end
 
-  # enforces parameter guards - this method is used to prevent methods from calling Pokemon methods on params that are not Pokemons
-  # A user shouldn't be able to make this error occur, instead this type of error is an unaccounted for system error that could occur
-  # in the event that it does happen the software should auto-recover to the last position unless unable in which cause system will exit and cause a restart of the program.
+  # type check to make sure that the parameter being passed is a Pokemon
+  # this is needed ensure there are no TypeValue errors
   def correct_param?(pocket_monster)
     unless pocket_monster.is_a?(Pokemon)
       puts 'Incorrect Type: Pokemon Required'
       return false
     end
 
-    true
+    true # return true if the param type is a Pokemon
   end
 end
